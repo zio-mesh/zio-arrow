@@ -1,0 +1,10 @@
+-Dfile.encoding=UTF8 
+-XX:MaxMetaspaceSize=1g
+-Xss8M 
+-Xms2G 
+-Xmx4G 
+
+#Perf 
+-XX:UseNUMA
+-XX:+UnlockExperimentalVMOptions 
+-XX:+UseZGC
