@@ -1,18 +1,14 @@
-import sbt._
-import Keys._
-
-import Versions._
-
 resolvers ++= Seq(
   Resolver.mavenLocal,
-  Resolver.jcenterRepo,
   Resolver.sonatypeRepo("releases"),
   Resolver.sonatypeRepo("snapshots")
 )
 
 inThisBuild(
   List(
-    organization := "pro.neurodyne",
+    version := "0.1.2",
+    organization := "io.github.neurodyne",
+    description := "Arrow interface for ZIO",
     homepage := Some(url("http://neurodyne.pro")),
     licenses := List("Apache-2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0")),
     developers := List(
@@ -37,18 +33,18 @@ lazy val commonSettings = Seq(
 )
 
 lazy val silencer = libraryDependencies ++= Seq(
-  compilerPlugin("com.github.ghik" % "silencer-plugin" % silencerVersion cross CrossVersion.full),
-  "com.github.ghik" % "silencer-lib" % silencerVersion % Provided cross CrossVersion.full
+  compilerPlugin("com.github.ghik" % "silencer-plugin" % Version.silencer cross CrossVersion.full),
+  "com.github.ghik" % "silencer-lib" % Version.silencer % Provided cross CrossVersion.full
 )
 
 lazy val zioDeps = libraryDependencies ++= Seq(
-  "dev.zio" %% "zio"          % zioVersion,
-  "dev.zio" %% "zio-test"     % zioVersion % "test",
-  "dev.zio" %% "zio-test-sbt" % zioVersion % "test"
+  "dev.zio" %% "zio"          % Version.zio,
+  "dev.zio" %% "zio-test"     % Version.zio % "test",
+  "dev.zio" %% "zio-test-sbt" % Version.zio % "test"
 )
 
 lazy val graphDeps = libraryDependencies ++= Seq(
-  "org.scala-graph" %% "graph-core" % "1.13.1"
+  "org.scala-graph" %% "graph-core" % Version.graph
 )
 
 lazy val bench = (project in file("bench"))
@@ -63,12 +59,8 @@ lazy val examples = (project in file("examples"))
 
 lazy val root = (project in file("."))
   .settings(
-    organization := "pro.neurodyne",
     name := "zio-arrow",
-    description := "Arrow package for ZIO",
-    version := "0.1.1",
-    pubSettings,
-    scalaVersion := "2.12.10",
+    scalaVersion := "2.13.2",
     maxErrors := 3,
     commonSettings,
     zioDeps,
@@ -83,14 +75,11 @@ lazy val docs = project // new documentation project
     scalacOptions -= "-Yno-imports",
     scalacOptions -= "-Xfatal-warnings",
     libraryDependencies ++= Seq(
-      "dev.zio" %% "zio" % zioVersion
+      "dev.zio" %% "zio" % Version.zio
     )
   )
   .dependsOn(root)
   .enablePlugins(MdocPlugin)
-
-lazy val pubSettings = Seq(
-  )
 
 publishTo := sonatypePublishToBundle.value
 
@@ -107,3 +96,5 @@ addCommandAlias("benchApi", "bench/jmh:run -i 1 -wi 1 -f1 -t2 .*ApiBenchmark")
 addCommandAlias("benchArray", "bench/jmh:run -i 1 -wi 1 -f1 -t2 ;.*BubbleSortBenchmark;.*ArrayFillBenchmark")
 addCommandAlias("benchSocket", "bench/jmh:run -i 1 -wi 1 -f1 -t2 .*SocketBenchmark")
 addCommandAlias("benchCompute", "bench/jmh:run -i 1 -wi 1 -f1 -t2 .*ComputeBenchmark")
+
+scalafixDependencies in ThisBuild += "com.nequissimus" %% "sort-imports" % "0.5.0"
