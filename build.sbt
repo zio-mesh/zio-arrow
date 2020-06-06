@@ -6,7 +6,7 @@ resolvers ++= Seq(
 
 inThisBuild(
   List(
-    scalaVersion := "2.13.2",
+    scalaVersion := "2.12.11",
     version := "0.2.1",
     organization := "io.github.neurodyne",
     description := "Arrow interface for ZIO",
