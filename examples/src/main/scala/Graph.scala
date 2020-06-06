@@ -1,11 +1,12 @@
-package zio.arrow
 package examples
 
-import zio._
-import zio.console.putStrLn
 import scalax.collection.Graph
-import scalax.collection.GraphPredef._
 import scalax.collection.GraphEdge._
+import scalax.collection.GraphPredef._
+
+import zio.arrow.ZArrow
+import zio.arrow.ZArrow._
+import zio.console.putStrLn
 
 case class MyNode(id: Int, op: ZArrow[Nothing, Int, Int])
 
@@ -14,7 +15,7 @@ case class MyEdge(
   val nodeTo: MyNode
 ) extends DiEdge(NodeProduct(nodeFrom, nodeTo))
 
-object GraphApp extends App {
+object GraphApp extends zio.App {
 
   def run(args: List[String]) = (prog1 >>= (v => putStrLn(v.toString))).exitCode
 
@@ -22,9 +23,9 @@ object GraphApp extends App {
   val g = (_: Int) * 2
   val h = (_: Int) - 3
 
-  val arrF = ZArrow(f)
-  val arrG = ZArrow(g)
-  val arrH = ZArrow(h)
+  val arrF = arr(f)
+  val arrG = arr(g)
+  val arrH = arr(h)
 
   val n1 = MyNode(1, arrF)
   val n2 = MyNode(2, arrG)

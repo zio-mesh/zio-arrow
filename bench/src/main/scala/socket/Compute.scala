@@ -1,9 +1,11 @@
 package bench
 
-import zio.{ Runtime }
 import java.util.concurrent.TimeUnit
-import org.openjdk.jmh.annotations._
+
 import BenchUtils._
+import org.openjdk.jmh.annotations._
+
+import zio.{ Runtime }
 
 @State(Scope.Thread)
 @BenchmarkMode(Array(Mode.Throughput))

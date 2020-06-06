@@ -6,8 +6,8 @@ import scala.collection.immutable.Range
 
 import org.openjdk.jmh.annotations._
 
-import zio.{ IO, Runtime }
 import zio.arrow._
+import zio.{ IO, Runtime }
 
 @State(Scope.Thread)
 @BenchmarkMode(Array(Mode.Throughput))

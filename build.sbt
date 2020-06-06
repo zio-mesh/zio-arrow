@@ -7,10 +7,10 @@ resolvers ++= Seq(
 inThisBuild(
   List(
     scalaVersion := "2.13.2",
-    version := "0.1.2",
+    version := "0.2.1",
     organization := "io.github.neurodyne",
     description := "Arrow interface for ZIO",
-    homepage := Some(url("http://neurodyne.pro")),
+    homepage := Some(url("https://github.com/Neurodyne/zio-arrow")),
     licenses := List("Apache-2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0")),
     developers := List(
       Developer(

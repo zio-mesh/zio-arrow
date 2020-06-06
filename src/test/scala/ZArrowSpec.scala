@@ -2,10 +2,10 @@ package zio.arrow
 
 import SpecUtils._
 
+import zio.{ IO }
 import zio.arrow.ZArrow._
 import zio.test.Assertion._
 import zio.test._
-import zio.{ IO }
 
 object ZArrowSpec extends ZIOBaseSpec {
 

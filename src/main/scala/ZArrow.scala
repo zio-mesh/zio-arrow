@@ -293,7 +293,7 @@ object ZArrow extends Serializable {
   /**
    * Lifts an impure function into `ZArrow`, assuming any throwables are
    * non-recoverable and do not need to be converted into errors.
-def   */
+   */
   def effectTotal[A, B](f: A => B): ZArrow[Nothing, A, B] = new Impure(f)
 
   /**

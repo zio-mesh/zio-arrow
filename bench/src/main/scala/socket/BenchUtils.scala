@@ -1,12 +1,14 @@
 package bench
 
+import java.util.concurrent.ThreadLocalRandom
 import java.util.concurrent.TimeUnit
+
+import scala.annotation.tailrec
+
+import FileUtils._
 
 import zio.{ ZIO }
 import zio.arrow._
-import FileUtils._
-import scala.annotation.tailrec
-import java.util.concurrent.ThreadLocalRandom
 
 object BenchUtils {
 
