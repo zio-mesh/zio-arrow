@@ -16,7 +16,7 @@ case class MyEdge(
 
 object GraphApp extends App {
 
-  def run(args: List[String]) = (prog1 >>= (v => putStrLn(v.toString))).as(0)
+  def run(args: List[String]) = (prog1 >>= (v => putStrLn(v.toString))).exitCode
 
   val f = (_: Int) + 1
   val g = (_: Int) * 2

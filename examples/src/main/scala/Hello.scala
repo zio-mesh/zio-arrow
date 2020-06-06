@@ -19,6 +19,5 @@ object Hello extends App {
 
   val prog0 = composed.run(10)
 
-  def run(args: List[String]) =
-    prog0.flatMap(a => console.putStrLn(a.toString)).as(0)
+  def run(args: List[String]) = prog0.flatMap(a => console.putStrLn(a.toString)).exitCode
 }

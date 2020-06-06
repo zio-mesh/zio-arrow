@@ -6,6 +6,7 @@ resolvers ++= Seq(
 
 inThisBuild(
   List(
+    scalaVersion := "2.13.2",
     version := "0.1.2",
     organization := "io.github.neurodyne",
     description := "Arrow interface for ZIO",
@@ -60,11 +61,11 @@ lazy val examples = (project in file("examples"))
 lazy val root = (project in file("."))
   .settings(
     name := "zio-arrow",
-    scalaVersion := "2.13.2",
     maxErrors := 3,
     commonSettings,
     zioDeps,
-    testFrameworks := Seq(new TestFramework("zio.test.sbt.ZTestFramework"))
+    testFrameworks := Seq(new TestFramework("zio.test.sbt.ZTestFramework")),
+    addCompilerPlugin("com.olegpy" %% "better-monadic-for" % "0.3.1")
   )
 
 lazy val docs = project // new documentation project

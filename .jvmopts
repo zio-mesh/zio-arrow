@@ -5,6 +5,6 @@
 -Xmx4G 
 
 #Perf 
--XX:UseNUMA
+-XX:+UseNUMA
 -XX:+UnlockExperimentalVMOptions 
 -XX:+UseZGC
