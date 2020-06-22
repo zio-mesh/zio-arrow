@@ -33,13 +33,13 @@ object Validate extends App {
 
   setup()
 
-  val plainSockRes = sock.plainBench
-  val zioSockRes   = sock.zioBench
-  val arrSockRes   = sock.arrowBench
+  val plainSockRes = sock.plainBench()
+  val zioSockRes   = sock.zioBench()
+  val arrSockRes   = sock.arrowBench()
 
-  val plainCompRes = comp.plainBench
-  val zioCompRes   = comp.zioBench
-  val arrCompRes   = comp.arrowBench
+  val plainCompRes = comp.plainBench()
+  val zioCompRes   = comp.zioBench()
+  val arrCompRes   = comp.arrowBench()
 
   assert(plainSockRes == zioSockRes)
   assert(zioSockRes == arrSockRes)

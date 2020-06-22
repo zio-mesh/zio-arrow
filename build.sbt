@@ -1,3 +1,5 @@
+import BuildHelper._
+
 resolvers ++= Seq(
   Resolver.mavenLocal,
   Resolver.sonatypeRepo("releases"),
@@ -7,6 +9,7 @@ resolvers ++= Seq(
 inThisBuild(
   List(
     scalaVersion := "2.13.2",
+    crossScalaVersions := Seq("2.12.11", "2.13.2", dottyVersion),
     version := "0.2.2",
     organization := "io.github.neurodyne",
     description := "Arrow interface for ZIO",
@@ -26,49 +29,33 @@ inThisBuild(
   )
 )
 
-lazy val commonSettings = Seq(
-// Refine scalac params from tpolecat
-  scalacOptions --= Seq(
-    "-Xfatal-warnings"
-  )
-)
-
-lazy val silencer = libraryDependencies ++= Seq(
-  compilerPlugin("com.github.ghik" % "silencer-plugin" % Version.silencer cross CrossVersion.full),
-  "com.github.ghik" % "silencer-lib" % Version.silencer % Provided cross CrossVersion.full
-)
-
-lazy val zioDeps = libraryDependencies ++= Seq(
-  "dev.zio" %% "zio"          % Version.zio,
-  "dev.zio" %% "zio-test"     % Version.zio % "test",
-  "dev.zio" %% "zio-test-sbt" % Version.zio % "test"
-)
-
-lazy val graphDeps = libraryDependencies ++= Seq(
-  "org.scala-graph" %% "graph-core" % Version.graph
-)
-
 lazy val compat = (project in file("compat"))
+  .settings(dottySettings)
   .settings(commonSettings, skip.in(publish) := true)
 
 lazy val bench = (project in file("bench"))
+  .settings(dottySettings)
   .settings(commonSettings, skip.in(publish) := true, silencer)
+  .settings(libraryDependencies := libraryDependencies.value.map(_.withDottyCompat(scalaVersion.value)))
   .enablePlugins(JmhPlugin)
   .dependsOn(root)
 
 lazy val examples = (project in file("examples"))
+  .settings(dottySettings)
   .settings(commonSettings, skip.in(publish) := true)
   .settings(graphDeps)
+  .settings(libraryDependencies := libraryDependencies.value.map(_.withDottyCompat(scalaVersion.value)))
   .dependsOn(root)
 
 lazy val root = (project in file("."))
+  .settings(dottySettings)
   .settings(
     name := "zio-arrow",
     maxErrors := 3,
     commonSettings,
     zioDeps,
-    testFrameworks := Seq(new TestFramework("zio.test.sbt.ZTestFramework")),
-    addCompilerPlugin("com.olegpy" %% "better-monadic-for" % "0.3.1")
+    libraryDependencies := libraryDependencies.value.map(_.withDottyCompat(scalaVersion.value)),
+    testFrameworks := Seq(new TestFramework("zio.test.sbt.ZTestFramework"))
   )
   .dependsOn(compat)
 

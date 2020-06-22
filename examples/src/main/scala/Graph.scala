@@ -10,10 +10,10 @@ import zio.console.putStrLn
 
 case class MyNode(id: Int, op: ZArrow[Nothing, Int, Int])
 
-case class MyEdge(
-  val nodeFrom: MyNode,
-  val nodeTo: MyNode
-) extends DiEdge(NodeProduct(nodeFrom, nodeTo))
+// case class MyEdge(
+//   val nodeFrom: MyNode,
+//   val nodeTo: MyNode
+// ) extends DiEdge(NodeProduct(nodeFrom, nodeTo))
 
 object GraphApp extends zio.App {
 
