@@ -6,8 +6,8 @@ resolvers ++= Seq(
 
 inThisBuild(
   List(
-    scalaVersion := "2.12.11",
-    version := "0.2.1",
+    scalaVersion := "2.13.2",
+    version := "0.2.2",
     organization := "io.github.neurodyne",
     description := "Arrow interface for ZIO",
     homepage := Some(url("https://github.com/Neurodyne/zio-arrow")),
@@ -48,6 +48,9 @@ lazy val graphDeps = libraryDependencies ++= Seq(
   "org.scala-graph" %% "graph-core" % Version.graph
 )
 
+lazy val compat = (project in file("compat"))
+  .settings(commonSettings, skip.in(publish) := true)
+
 lazy val bench = (project in file("bench"))
   .settings(commonSettings, skip.in(publish) := true, silencer)
   .enablePlugins(JmhPlugin)
@@ -67,6 +70,7 @@ lazy val root = (project in file("."))
     testFrameworks := Seq(new TestFramework("zio.test.sbt.ZTestFramework")),
     addCompilerPlugin("com.olegpy" %% "better-monadic-for" % "0.3.1")
   )
+  .dependsOn(compat)
 
 lazy val docs = project // new documentation project
   .in(file("zio-arrow-docs"))
@@ -98,4 +102,4 @@ addCommandAlias("benchArray", "bench/jmh:run -i 1 -wi 1 -f1 -t2 ;.*BubbleSortBen
 addCommandAlias("benchSocket", "bench/jmh:run -i 1 -wi 1 -f1 -t2 .*SocketBenchmark")
 addCommandAlias("benchCompute", "bench/jmh:run -i 1 -wi 1 -f1 -t2 .*ComputeBenchmark")
 
-scalafixDependencies in ThisBuild += "com.nequissimus" %% "sort-imports" % "0.5.0"
+scalafixDependencies in ThisBuild += "com.nequissimus" %% "sort-imports" % "0.5.4"

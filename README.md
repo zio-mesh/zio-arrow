@@ -8,7 +8,8 @@
 Q: What's an `Arrow`? <br>
 A: `Arrow` is a monoid in a category of strong profunctors
 
-More info [here](docs/Intro.md)
+More info [here](docs/Intro.md) <br>
+Join discussions on [Discord](https://discord.com/channels/629491597070827530/671823334421430282)
 
 ZIO Arrow is an effectful data structure for modeling a highly composable effects. As an example of effect composition, consider the following code:
 
@@ -60,7 +61,7 @@ Both effects result in the same value. What's different is the performance for s
 ```bash
   Arrow >>>>>> arrowComposed = (ZArrow)MODULE$.arrows().foldLeft((Object)ZArrow$.MODULE$.identity(), (Function2 & Serializable)(x$4, x$5) -> x$4.$greater$greater$greater(x$5));
   
-  Monad >>>>>> public ZIO<Object, Nothing$, Object> monadComposed(int din) {return ZIO$.MODULE$.effectTotal((Function0 & Serializable)() -> MODULE$.f()).flatMap((Function1 & Serializable)f0 -> ZIO$.MODULE$.effectTotal((Function0 & Serializable)() -> MODULE$.g()).flatMap((Function1 & Serializable)g0 -> ZIO$.MODULE$.effectTotal((Function0 & Serializable)() -> MODULE$.h()).map((Function1 & Serializable)h0 -> BoxesRunTime.boxToInteger((int)ArrowMonad$.$anonfun$monadComposed$6(f0, g0, din, h0)))));
+  Monad >>>>>> public ZIO<Object, Nothing$, Object> monadComposed(int din) {return ZIO$.MODULE$.effectTotal((Function0 & Serializable)() -> <br>MODULE$.f()).flatMap((Function1 & Serializable)f0 -> ZIO$.MODULE$.effectTotal((Function0 & Serializable)() -> MODULE$.g()).flatMap((Function1 & Serializable)g0 -> ZIO$.MODULE$.effectTotal((Function0 & Serializable)() -> MODULE$.h()).map((Function1 & Serializable)h0 -> BoxesRunTime.boxToInteger((int)ArrowMonad$.$anonfun$monadComposed$6(f0, g0, din, h0)))));
 ```
 
 As we see from a decompiled code, Scala compiler assembles `Arrow` into a single nice static object and folds a `Function2` with and `Identity function` to obtain the final result. On the other hand, `Monad` is implemented as a chained computation with `flatMap`.
