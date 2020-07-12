@@ -30,10 +30,6 @@ inThisBuild(
   )
 )
 
-lazy val compat = (project in file("compat"))
-  .settings(dottySettings)
-  .settings(commonSettings, skip.in(publish) := true)
-
 lazy val bench = (project in file("bench"))
   .settings(dottySettings)
   .settings(commonSettings, skip.in(publish) := true, silencer)
@@ -60,7 +56,6 @@ lazy val root = (project in file("."))
     testFrameworks := Seq(new TestFramework("zio.test.sbt.ZTestFramework")),
     licenses := List("Apache-2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0"))
   )
-  .dependsOn(compat)
 
 lazy val docs = project // new documentation project
   .in(file("zio-arrow-docs"))
