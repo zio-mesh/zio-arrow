@@ -8,12 +8,13 @@ resolvers ++= Seq(
 
 inThisBuild(
   List(
-    scalaVersion := "2.13.2",
-    crossScalaVersions := Seq("2.12.11", "2.13.2", dottyVersion),
+    scalaVersion := "2.13.3",
+    crossScalaVersions := Seq("2.12.11", "2.13.3", dottyVersion),
     version := "0.2.2",
-    organization := "io.github.neurodyne",
+    organization := "zio.crew",
     description := "Arrow interface for ZIO",
-    homepage := Some(url("https://github.com/Neurodyne/zio-arrow")),
+    startYear := Some(2020),
+    homepage := Some(url("https://github.com/zio-crew/zio-arrow")),
     licenses := List("Apache-2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0")),
     developers := List(
       Developer(
@@ -24,7 +25,7 @@ inThisBuild(
       )
     ),
     scmInfo := Some(
-      ScmInfo(url("https://github.com/Neurodyne/zio-arrow"), "scm:git@github.com:Neurodyne/zio-arrow.git")
+      ScmInfo(url("https://github.com/zio-crew/zio-arrow"), "scm:git@github.com:zio-crew/zio-arrow.git")
     )
   )
 )
@@ -48,6 +49,7 @@ lazy val examples = (project in file("examples"))
   .dependsOn(root)
 
 lazy val root = (project in file("."))
+  .enablePlugins(AutomateHeaderPlugin)
   .settings(dottySettings)
   .settings(
     name := "zio-arrow",
@@ -55,7 +57,8 @@ lazy val root = (project in file("."))
     commonSettings,
     zioDeps,
     libraryDependencies := libraryDependencies.value.map(_.withDottyCompat(scalaVersion.value)),
-    testFrameworks := Seq(new TestFramework("zio.test.sbt.ZTestFramework"))
+    testFrameworks := Seq(new TestFramework("zio.test.sbt.ZTestFramework")),
+    licenses := List("Apache-2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0"))
   )
   .dependsOn(compat)
 
@@ -72,8 +75,6 @@ lazy val docs = project // new documentation project
   )
   .dependsOn(root)
   .enablePlugins(MdocPlugin)
-
-publishTo := sonatypePublishToBundle.value
 
 // Common
 addCommandAlias("rel", "reload")

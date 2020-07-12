@@ -5,7 +5,7 @@ import scalafix.sbt.ScalafixPlugin.autoImport.scalafixSemanticdb
 
 object BuildHelper {
 
-  val dottyVersion = "0.26.0-bin-20200618-de75713-NIGHTLY"
+  val dottyVersion = "0.26.0-bin-20200710-a162b7b-NIGHTLY"
 
   val dottySettings = Seq(
     // Keep this consistent with the version in .circleci/config.yml
@@ -43,12 +43,12 @@ object BuildHelper {
 
   def stdSettings(prjName: String) = Seq(
     name := s"$prjName",
-    crossScalaVersions := Seq("2.12.10", "2.13.2"),
+    crossScalaVersions := Seq("2.12.11", "2.13.3"),
     scalaVersion in ThisBuild := crossScalaVersions.value.head,
     libraryDependencies ++= {
       if (isDotty.value) {
         Seq(
-          ("com.github.ghik" % "silencer-lib_2.13.2" % Version.silencer % Provided).withDottyCompat(scalaVersion.value)
+          ("com.github.ghik" % "silencer-lib_2.13.3" % Version.silencer % Provided).withDottyCompat(scalaVersion.value)
         )
 
       } else
@@ -73,7 +73,7 @@ object BuildHelper {
 
   lazy val silencer = libraryDependencies ++= {
     if (isDotty.value) {
-      Seq(("com.github.ghik" % "silencer-lib_2.13.2" % Version.silencer % Provided).withDottyCompat(scalaVersion.value))
+      Seq(("com.github.ghik" % "silencer-lib_2.13.3" % Version.silencer % Provided).withDottyCompat(scalaVersion.value))
 
     } else {
       Seq(
