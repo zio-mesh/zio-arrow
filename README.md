@@ -78,6 +78,4 @@ libraryDependencies += "io.github.neurodyne" %% "zio-arrow" % "0.2.1"
 ```
 ## Credits
 
-This project was initially anticipated, coded and presented on [LambdaConf 2018](https://www.youtube.com/watch?v=L8AEj6IRNEE) by [John De Goes](https://github.com/jdegoes) and [Wiem Zine El Abidine](https://github.com/wi101)
-
-As a standalone project it has emerged due to coding and tutoring effort of [Adam Fraser](https://github.com/adamgfraser/), who also made a great initial introduction and tutoring for me.
+Initial contributors: [Wiem Zine El Abidine](https://github.com/wi101), [John De Goes](https://github.com/jdegoes), [Adam Fraser](https://github.com/adamgfraser/)
