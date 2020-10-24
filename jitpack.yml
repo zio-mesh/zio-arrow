@@ -1,0 +1,3 @@
+install:
+   - sbt ++2.13.3  publishM2
+   - sbt ++2.12.12 publishM2
