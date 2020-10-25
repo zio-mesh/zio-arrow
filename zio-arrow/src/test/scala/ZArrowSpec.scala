@@ -37,7 +37,7 @@ object ZArrowSpec extends ZIOBaseSpec {
       testM("`identity` returns the id of the input without modification") {
         assertM(identity[Int].run(1))(equalTo(1))
       },
-      testM("`>>>` is a symbolic operator of `andThen`which does a Backwards composition of effectful functions") {
+      testM("`>>>` is a symbolic operator of `andThen` which does a Backwards composition of effectful functions") {
         assertM((add1 >>> mul2).run(6))(equalTo(14))
       },
       testM("`<<<` is a symbolic operator of `compose` which compose two effectful functions") {

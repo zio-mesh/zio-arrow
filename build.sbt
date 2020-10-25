@@ -6,69 +6,61 @@ resolvers ++= Seq(
   Resolver.sonatypeRepo("snapshots")
 )
 
-inThisBuild(
-  List(
-    scalaVersion := "2.13.3",
-    crossScalaVersions := Seq("2.12.11", "2.13.3", dottyVersion),
-    version := "0.2.2",
-    organization := "zio.crew",
-    description := "Arrow interface for ZIO",
-    startYear := Some(2020),
-    homepage := Some(url("https://github.com/zio-crew/zio-arrow")),
-    licenses := List("Apache-2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0")),
-    developers := List(
-      Developer(
-        "tampler",
-        "Boris V.Kuznetsov",
-        "socnetfpga@gmail.com",
-        url("https://github.com/tampler")
-      )
-    ),
-    scmInfo := Some(
-      ScmInfo(url("https://github.com/zio-crew/zio-arrow"), "scm:git@github.com:zio-crew/zio-arrow.git")
-    )
-  )
-)
-
-lazy val bench = (project in file("bench"))
-  .settings(dottySettings)
-  .settings(commonSettings, skip.in(publish) := true, silencer)
-  .settings(libraryDependencies := libraryDependencies.value.map(_.withDottyCompat(scalaVersion.value)))
-  .enablePlugins(JmhPlugin)
-  .dependsOn(root)
-
-lazy val examples = (project in file("examples"))
-  .settings(dottySettings)
-  .settings(commonSettings, skip.in(publish) := true)
-  .settings(graphDeps)
-  .settings(libraryDependencies := libraryDependencies.value.map(_.withDottyCompat(scalaVersion.value)))
-  .dependsOn(root)
+inThisBuild(scalaVersion := Version.scala)
 
 lazy val root = (project in file("."))
+  .settings(noPublish)
+  .aggregate(arrowJVM, arrowJS, examples, bench, docs)
+
+val arrow = crossProject(JVMPlatform, JSPlatform)
+  .withoutSuffixFor(JVMPlatform)
+  .crossType(CrossType.Pure)
+  .in(file("zio-arrow"))
   .enablePlugins(AutomateHeaderPlugin)
-  .settings(dottySettings)
   .settings(
     name := "zio-arrow",
-    maxErrors := 3,
     commonSettings,
     zioDeps,
-    libraryDependencies := libraryDependencies.value.map(_.withDottyCompat(scalaVersion.value)),
-    testFrameworks := Seq(new TestFramework("zio.test.sbt.ZTestFramework")),
-    licenses := List("Apache-2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0"))
+    zioTestDeps,
+    testFrameworks := Seq(new TestFramework("zio.test.sbt.ZTestFramework"))
   )
+  .jvmSettings(
+    dottySettings
+  )
+
+lazy val arrowJS  = arrow.js
+lazy val arrowJVM = arrow.jvm
+
+lazy val bench = (project in file("bench"))
+  .settings(
+    commonSettings,
+    noPublish,
+    silencer,
+    dottySettings
+  )
+  .enablePlugins(JmhPlugin)
+  .dependsOn(arrowJVM)
+
+lazy val examples = (project in file("examples"))
+  .settings(
+    commonSettings,
+    noPublish,
+    graphDeps,
+    dottySettings
+  )
+  .dependsOn(arrowJVM)
 
 lazy val docs = project // new documentation project
   .in(file("zio-arrow-docs"))
   .settings(
-    skip.in(publish) := true,
+    commonSettings,
+    noPublish,
     moduleName := "zio-arrow-docs",
     scalacOptions -= "-Yno-imports",
     scalacOptions -= "-Xfatal-warnings",
-    libraryDependencies ++= Seq(
-      "dev.zio" %% "zio" % Version.zio
-    )
+    dottySettings
   )
-  .dependsOn(root)
+  .dependsOn(arrowJVM)
   .enablePlugins(MdocPlugin)
 
 // Common
